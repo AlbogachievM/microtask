@@ -1,24 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import { FullInput } from './components/FullInput';
+import { Input } from './components/Input';
+import { Button } from './components/Button';
+
+
 
 function App() {
+  let [message, setMessage] = useState([
+    { message: 'message 1' },
+    { message: 'message 2' },
+    { message: 'message 3' },
+  ])
+
+  let [title, setTitle] = useState('')
+  console.log(title);
+
+
+  function addMessage(value: string) {
+    setMessage([{ message: value }, ...message,])
+
+  }
+
+  function callBackButtonHandler() {
+      addMessage(title);
+      setTitle('')
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <div>
+        <Input setTitle={setTitle} title={title} />
+        <Button title='+' callBack={callBackButtonHandler} />
+      </div>
+
+      {message.map((m, index) => {
+        return (
+          <div key={index}>{m.message}</div>
+        )
+      })}
     </div>
   );
 }
